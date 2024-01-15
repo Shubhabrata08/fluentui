@@ -23,6 +23,7 @@
     "@fluentui/example-data": "*",
     "@fluentui/font-icons-mdl2": "*",
     "@fluentui/react": "*",
+    "@fluentui/react-components": "*",
     "@fluentui/react-experiments": "*",
     "@fluentui/react-hooks": "*",
     "@fluentui/react-icons-mdl2": "*",

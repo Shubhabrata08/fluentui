@@ -4,7 +4,7 @@ import { StoryWright, Steps } from 'storywright';
 import { TestWrapperDecorator } from '../../utilities/TestWrapperDecorator';
 import { AreaChart, ICustomizedCalloutData, ChartHoverCard } from '@fluentui/react-charting';
 import { DefaultPalette } from '@fluentui/react';
-
+import { FluentProvider, webDarkTheme } from '@fluentui/react-components';
 storiesOf('react-charting/AreaChart', module)
   .addDecorator((story, context) => TestWrapperDecorator(story, context))
   .addDecorator((story, context) => {
@@ -21,7 +21,11 @@ storiesOf('react-charting/AreaChart', module)
             .snapshot('hover', { cropTo: '.testWrapper' })
             .end()
         : new Steps().snapshot('default', { cropTo: '.testWrapper' }).end();
-    return <StoryWright steps={steps}>{story()}</StoryWright>;
+    return (
+      <FluentProvider theme={webDarkTheme}>
+        <StoryWright steps={steps}>{story()}</StoryWright>
+      </FluentProvider>
+    );
   })
   .addStory(
     'Basic',
