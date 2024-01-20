@@ -8,12 +8,26 @@ import {
   MultiStackedBarChart,
   MultiStackedBarChartVariant,
 } from '@fluentui/react-charting';
-
+import { ThemeContext_unstable } from '@fluentui/react-shared-contexts';
+import { Theme, webLightTheme } from '@fluentui/react-components';
+import * as d3Color from 'd3-color';
+import { ThemeProvider } from '@fluentui/react';
+import { myVariant } from './theme';
+import { createV8Theme } from '@fluentui/react-migration-v8-v9';
 storiesOf('react-charting/MultiStackBarChart', module)
   .addDecorator((story, context) => TestWrapperDecorator(story, context))
   .addDecorator((story, context) => {
     const steps = new Steps().snapshot('default', { cropTo: '.testWrapper' }).end();
-    return <StoryWright steps={steps}>{story()}</StoryWright>;
+    const parentV9Theme = React.useContext(ThemeContext_unstable) as Theme;
+    const v9Theme: Theme = parentV9Theme ? parentV9Theme : webLightTheme;
+    const backgroundColor = d3Color.hsl(v9Theme.colorNeutralBackground1);
+    const foregroundColor = d3Color.hsl(v9Theme.colorNeutralForeground1);
+    const myV8Theme = createV8Theme(myVariant, v9Theme, backgroundColor.l < foregroundColor.l);
+    return (
+      <ThemeProvider theme={myV8Theme}>
+        <StoryWright steps={steps}>{story()}</StoryWright>
+      </ThemeProvider>
+    );
   })
   .addStory(
     'Basic_Absolute',

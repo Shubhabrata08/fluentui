@@ -4,7 +4,12 @@ import { StoryWright, Steps } from 'storywright';
 import { TestWrapperDecorator } from '../../utilities/TestWrapperDecorator';
 import { AreaChart, ICustomizedCalloutData, ChartHoverCard } from '@fluentui/react-charting';
 import { DefaultPalette } from '@fluentui/react';
-import { FluentProvider, webDarkTheme } from '@fluentui/react-components';
+import { Theme, webDarkTheme, webLightTheme } from '@fluentui/react-components';
+import { ThemeContext_unstable as V9ThemeContext } from '@fluentui/react-shared-contexts';
+import * as d3Color from 'd3-color';
+import { createV8Theme } from '@fluentui/react-migration-v8-v9';
+import { myVariant } from './theme';
+import { ThemeProvider } from '@fluentui/react';
 storiesOf('react-charting/AreaChart', module)
   .addDecorator((story, context) => TestWrapperDecorator(story, context))
   .addDecorator((story, context) => {
@@ -21,10 +26,16 @@ storiesOf('react-charting/AreaChart', module)
             .snapshot('hover', { cropTo: '.testWrapper' })
             .end()
         : new Steps().snapshot('default', { cropTo: '.testWrapper' }).end();
+    const parentV9Theme = React.useContext(V9ThemeContext) as Theme;
+    const v9Theme: Theme = parentV9Theme ? parentV9Theme : webLightTheme;
+    const backgroundColor = d3Color.hsl(v9Theme.colorNeutralBackground1);
+    const foregroundColor = d3Color.hsl(v9Theme.colorNeutralForeground1);
+    // eslint-disable-next-line @fluentui/max-len
+    const myV8Theme = createV8Theme(myVariant, v9Theme, backgroundColor.l < foregroundColor.l); // For dark theme background color is darker than foreground color
     return (
-      <FluentProvider theme={webDarkTheme}>
+      <ThemeProvider theme={myV8Theme}>
         <StoryWright steps={steps}>{story()}</StoryWright>
-      </FluentProvider>
+      </ThemeProvider>
     );
   })
   .addStory(

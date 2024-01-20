@@ -32,7 +32,10 @@ module.exports = /** @type {import('../../../.storybook/main').StorybookBaseConf
     },
     '@storybook/addon-actions',
   ],
-  stories: ['../src/**/*.stories.tsx'],
+  stories: [
+    '../src/stories/react-charting/*.stories.tsx',
+    '../src/stories/react-charting/**/*.stories.tsx',
+  ],
   core: {
     builder: 'webpack5',
     disableTelemetry: true,
