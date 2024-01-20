@@ -19,7 +19,7 @@ storiesOf('react-charting/TreeChart', module)
     const foregroundColor = d3Color.hsl(v9Theme.colorNeutralForeground1);
     const myV8Theme = createV8Theme(myVariant, v9Theme, backgroundColor.l < foregroundColor.l);
     return (
-      <ThemeProvider theme={myV8Theme}>
+      <ThemeProvider theme={webLightTheme}>
         <StoryWright steps={steps}>{story()}</StoryWright>
       </ThemeProvider>
     );

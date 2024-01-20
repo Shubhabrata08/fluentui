@@ -22,12 +22,12 @@ storiesOf('react-charting/VerticalBarChart', module)
   .addDecorator((story, context) => {
     const steps = new Steps().snapshot('default', { cropTo: '.testWrapper' }).end();
     const parentV9Theme = React.useContext(ThemeContext_unstable) as Theme;
-    const v9Theme: Theme = parentV9Theme ? parentV9Theme : webLightTheme;
+    const v9Theme: Theme = parentV9Theme ? webLightTheme : webLightTheme;
     const backgroundColor = d3Color.hsl(v9Theme.colorNeutralBackground1);
     const foregroundColor = d3Color.hsl(v9Theme.colorNeutralForeground1);
     const myV8Theme = createV8Theme(myVariant, v9Theme, backgroundColor.l < foregroundColor.l);
     return (
-      <ThemeProvider theme={myV8Theme}>
+      <ThemeProvider theme={webLightTheme}>
         <StoryWright steps={steps}>{story()}</StoryWright>
       </ThemeProvider>
     );

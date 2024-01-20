@@ -33,7 +33,7 @@ storiesOf('react-charting/AreaChart', module)
     // eslint-disable-next-line @fluentui/max-len
     const myV8Theme = createV8Theme(myVariant, v9Theme, backgroundColor.l < foregroundColor.l); // For dark theme background color is darker than foreground color
     return (
-      <ThemeProvider theme={myV8Theme}>
+      <ThemeProvider theme={webLightTheme}>
         <StoryWright steps={steps}>{story()}</StoryWright>
       </ThemeProvider>
     );
