@@ -7,11 +7,17 @@ import { DefaultPalette } from '@fluentui/react';
 import { ThemeProvider } from '@fluentui/react';
 import { getMyV8Theme } from './theme';
 storiesOf('react-charting/AreaChart', module)
-  .addDecorator((story, context) => TestWrapperDecorator(story, context))
+  // .addDecorator(story => <ThemeProvider theme={getMyV8Theme()}>{story()}</ThemeProvider>)
+  .addDecorator(story => (
+    <div style={{ display: 'flex' }}>
+      <div className="testWrapper" style={{ maxWidth: '750px' }}>
+        {story()}
+      </div>
+    </div>
+  ))
   .addDecorator((story, context) => {
     const steps =
-      (context.name.startsWith('Basic') || context.name.startsWith('Multiple')) &&
-      !context.name.includes('RTL')
+      (context.name.startsWith('Basic') || context.name.startsWith('Multiple')) && !context.name.includes('RTL')
         ? new Steps()
             .snapshot('default', { cropTo: '.testWrapper' })
             // to hover over the area charts and show the callout
@@ -22,11 +28,7 @@ storiesOf('react-charting/AreaChart', module)
             .snapshot('hover', { cropTo: '.testWrapper' })
             .end()
         : new Steps().snapshot('default', { cropTo: '.testWrapper' }).end();
-    return (
-      <StoryWright steps={steps}>
-        <ThemeProvider theme={getMyV8Theme()}>{story()}</ThemeProvider>
-      </StoryWright>
-    );
+    return <StoryWright steps={steps}>{story()}</StoryWright>;
   })
   .addStory(
     'Basic',

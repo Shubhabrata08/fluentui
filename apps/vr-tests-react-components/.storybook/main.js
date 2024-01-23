@@ -33,7 +33,7 @@ module.exports = /** @type {import('../../../.storybook/main').StorybookBaseConf
     },
     loadWorkspaceAddon('@fluentui/react-storybook-addon', { tsConfigPath }),
   ],
-  stories: ['../src/**/*.stories.tsx'],
+  stories: ['../src/react-charting/**/*.stories.tsx'],
   core: {
     builder: 'webpack5',
     disableTelemetry: true,
