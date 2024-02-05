@@ -9,13 +9,11 @@ import { getMyV8Theme } from './theme';
 storiesOf('react-charting/AreaChart', module)
   // .addDecorator(story => <ThemeProvider theme={getMyV8Theme()}>{story()}</ThemeProvider>)
   .addDecorator(story => (
-    <ThemeProvider theme={getMyV8Theme()}>
-      <div style={{ display: 'flex' }}>
-        <div className="testWrapper" style={{ maxWidth: '750px' }}>
-          {story()}
-        </div>
+    <div style={{ display: 'flex' }}>
+      <div className="testWrapper" style={{ maxWidth: '750px' }}>
+        {story()}
       </div>
-    </ThemeProvider>
+    </div>
   ))
   .addDecorator((story, context) => {
     const steps =

@@ -4,6 +4,7 @@ import * as React from 'react';
 import { setAddon } from '@storybook/react';
 import { webLightTheme, teamsHighContrastTheme, webDarkTheme } from '@fluentui/react-theme';
 import { FluentProvider } from '@fluentui/react-provider';
+import { getMyV8Theme } from '../src/react-charting/theme';
 
 /**
  * @deprecated https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-setaddon
@@ -28,7 +29,7 @@ setAddon({
   addStory(storyName, storyFn, config = {}) {
     this.add(storyName, (/** @type {import('../src/utilities/types').StoryContext} */ context) => {
       return (
-        <FluentProvider applyStylesToPortals={false} theme={webLightTheme}>
+        <FluentProvider applyStylesToPortals={false} theme={getMyV8Theme()}>
           {storyFn(context)}
         </FluentProvider>
       );
@@ -36,7 +37,7 @@ setAddon({
     if (config.includeRtl) {
       this.add(storyName + ' - RTL', (/** @type {import('../src/utilities/types').StoryContext} */ context) => {
         return (
-          <FluentProvider applyStylesToPortals={false} theme={webLightTheme} dir="rtl">
+          <FluentProvider applyStylesToPortals={false} theme={getMyV8Theme()} dir="rtl">
             {storyFn(context)}
           </FluentProvider>
         );
@@ -45,7 +46,7 @@ setAddon({
     if (config.includeDarkMode) {
       this.add(storyName + ' - Dark Mode', (/** @type {import('../src/utilities/types').StoryContext} */ context) => {
         return (
-          <FluentProvider applyStylesToPortals={false} theme={webDarkTheme}>
+          <FluentProvider applyStylesToPortals={false} theme={getMyV8Theme()}>
             {storyFn(context)}
           </FluentProvider>
         );
