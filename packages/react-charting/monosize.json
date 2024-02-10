@@ -1,0 +1,65 @@
+[
+  { "name": "AreaChart", "path": "bundle-size/AreaChart.fixture.js", "minifiedSize": 254642, "gzippedSize": 78504 },
+  {
+    "name": "ChartHoverCard",
+    "path": "bundle-size/ChartHoverCard.fixture.js",
+    "minifiedSize": 47383,
+    "gzippedSize": 15544
+  },
+  { "name": "DonutChart", "path": "bundle-size/DonutChart.fixture.js", "minifiedSize": 173402, "gzippedSize": 54139 },
+  { "name": "GaugeChart", "path": "bundle-size/GaugeChart.fixture.js", "minifiedSize": 176435, "gzippedSize": 54282 },
+  {
+    "name": "GroupedVerticalBarChart",
+    "path": "bundle-size/GroupedVerticalBarChart.fixture.js",
+    "minifiedSize": 239083,
+    "gzippedSize": 73459
+  },
+  {
+    "name": "HeatMapChart",
+    "path": "bundle-size/HeatMapChart.fixture.js",
+    "minifiedSize": 238729,
+    "gzippedSize": 73317
+  },
+  {
+    "name": "HorizontalBarChart",
+    "path": "bundle-size/HorizontalBarChart.fixture.js",
+    "minifiedSize": 132410,
+    "gzippedSize": 41106
+  },
+  {
+    "name": "HorizontalBarChartWithAxis",
+    "path": "bundle-size/HorizontalBarChartWithAxis.fixture.js",
+    "minifiedSize": 243681,
+    "gzippedSize": 74209
+  },
+  { "name": "Legends", "path": "bundle-size/Legends.fixture.js", "minifiedSize": 143993, "gzippedSize": 43998 },
+  { "name": "LineChart", "path": "bundle-size/LineChart.fixture.js", "minifiedSize": 279248, "gzippedSize": 84513 },
+  {
+    "name": "MultiStackedBarChart",
+    "path": "bundle-size/MultiStackedBarChart.fixture.js",
+    "minifiedSize": 170993,
+    "gzippedSize": 51765
+  },
+  { "name": "PieChart", "path": "bundle-size/PieChart.fixture.js", "minifiedSize": 129864, "gzippedSize": 40779 },
+  { "name": "SankeyChart", "path": "bundle-size/SankeyChart.fixture.js", "minifiedSize": 136244, "gzippedSize": 41966 },
+  { "name": "Sparkline", "path": "bundle-size/Sparkline.fixture.js", "minifiedSize": 84149, "gzippedSize": 28278 },
+  {
+    "name": "StackedBarChart",
+    "path": "bundle-size/StackedBarChart.fixture.js",
+    "minifiedSize": 165078,
+    "gzippedSize": 49462
+  },
+  { "name": "TreeChart", "path": "bundle-size/TreeChart.fixture.js", "minifiedSize": 81141, "gzippedSize": 25558 },
+  {
+    "name": "VerticalBarChart",
+    "path": "bundle-size/VerticalBarChart.fixture.js",
+    "minifiedSize": 252777,
+    "gzippedSize": 75914
+  },
+  {
+    "name": "VerticalStackedBarChart",
+    "path": "bundle-size/VerticalStackedBarChart.fixture.js",
+    "minifiedSize": 249097,
+    "gzippedSize": 75131
+  }
+]
