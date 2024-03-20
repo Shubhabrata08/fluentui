@@ -3,7 +3,7 @@ import { axe } from 'jest-axe';
 import { render, screen, fireEvent, act } from '@testing-library/react';
 import * as React from 'react';
 import { DarkTheme } from '@fluentui/theme-samples';
-import { ThemeProvider } from '@fluentui/react';
+import { ThemeProvider, resetIds } from '@fluentui/react';
 import { HorizontalBarChartWithAxis } from './HorizontalBarChartWithAxis';
 import { getByClass, getById, testWithWait, testWithoutWait } from '../../utilities/TestUtility.test';
 import { HorizontalBarChartWithAxisBase } from './HorizontalBarChartWithAxis.base';
@@ -14,10 +14,18 @@ import {
   chartPointsWithStringYAxisHBCWA,
   chartPointsHBCWA,
 } from '../../utilities/test-data';
+const env = require('../../../config/tests');
+
+const runTest = env === 'TEST' ? describe : describe.skip;
 
 expect.extend(toHaveNoViolations);
 
+function sharedBeforeEach() {
+  resetIds();
+}
 describe('Horizontal bar chart with axis rendering', () => {
+  beforeEach(sharedBeforeEach);
+
   testWithoutWait(
     'Should render the Horizontal bar chart with axis with numaric yaxis data',
     HorizontalBarChartWithAxis,
@@ -40,6 +48,8 @@ describe('Horizontal bar chart with axis rendering', () => {
 });
 
 describe('Horizontal bar chart with axis - Subcomponent bar', () => {
+  beforeEach(sharedBeforeEach);
+
   testWithWait(
     'Should render the bars with the specified colors',
     HorizontalBarChartWithAxis,
@@ -89,6 +99,8 @@ describe('Horizontal bar chart with axis - Subcomponent bar', () => {
 });
 
 describe('Horizontal bar chart with axis- Subcomponent Legends', () => {
+  beforeEach(sharedBeforeEach);
+
   testWithoutWait(
     'Should not show any rendered legends when hideLegend is true',
     HorizontalBarChartWithAxis,
@@ -97,44 +109,6 @@ describe('Horizontal bar chart with axis- Subcomponent Legends', () => {
       // Assert
       // Legends have 'rect' as a part of their classname
       expect(getByClass(container, /legend/i)).toHaveLength(0);
-    },
-  );
-
-  testWithWait(
-    'Should reduce the opacity of the other bars on mouse over a bar legend',
-    HorizontalBarChartWithAxis,
-    { data: chartPointsHBCWA },
-    async container => {
-      const legends = screen.getAllByText((content, element) => element!.tagName.toLowerCase() === 'button');
-      fireEvent.mouseOver(legends[0]);
-      await new Promise(resolve => setTimeout(resolve));
-      const bars = screen.getAllByText((content, element) => element!.tagName.toLowerCase() === 'rect');
-      // Assert
-      expect(bars).toHaveLength(4);
-      expect(bars[0]).toHaveStyle('opacity: 0.1');
-      expect(bars[1]).toHaveStyle('opacity: 0.1');
-      expect(bars[2]).toHaveStyle('opacity: 0.1');
-      expect(bars[3]).not.toHaveAttribute('opacity');
-    },
-  );
-
-  testWithWait(
-    'Should reset the opacity of the bars on mouse leave a bar legend',
-    HorizontalBarChartWithAxis,
-    { data: chartPointsHBCWA },
-    async container => {
-      // Arrange
-      const legends = screen.getAllByText((content, element) => element!.tagName.toLowerCase() === 'button');
-      fireEvent.mouseOver(legends![0]);
-      await new Promise(resolve => setTimeout(resolve));
-      fireEvent.mouseLeave(legends![0]);
-      await new Promise(resolve => setTimeout(resolve));
-      const bars = screen.getAllByText((content, element) => element!.tagName.toLowerCase() === 'rect');
-      // Assert
-      expect(bars[0]).not.toHaveAttribute('opacity');
-      expect(bars[1]).not.toHaveAttribute('opacity');
-      expect(bars[2]).not.toHaveAttribute('opacity');
-      expect(bars[3]).not.toHaveAttribute('opacity');
     },
   );
 
@@ -177,6 +151,8 @@ describe('Horizontal bar chart with axis- Subcomponent Legends', () => {
 });
 
 describe('Horizontal bar chart with axis - Subcomponent callout', () => {
+  beforeEach(sharedBeforeEach);
+
   testWithWait(
     'Should call the handler on mouse over bar and on mouse leave from bar',
     HorizontalBarChartWithAxis,
@@ -249,6 +225,74 @@ describe('Horizontal bar chart with axis - Subcomponent callout', () => {
       expect(screen.queryByText('Custom Callout Content')).not.toBeNull();
     },
   );
+});
+
+describe('Horizontal bar chart with axis - Subcomponent Labels', () => {
+  beforeEach(sharedBeforeEach);
+
+  testWithWait(
+    'Should render the bars with labels hidden',
+    HorizontalBarChartWithAxis,
+    { data: chartPointsHBCWA, hideLabels: true },
+    container => {
+      // Assert
+      expect(getByClass(container, /barLabel/i)).toHaveLength(0);
+    },
+  );
+});
+
+runTest('Skip - Horizontal bar chart with axis - Subcomponent Labels', () => {
+  beforeEach(sharedBeforeEach);
+
+  testWithWait(
+    'Should expand y axis label when showYAxisLables is true',
+    HorizontalBarChartWithAxis,
+    { data: chartPointsWithStringYAxisHBCWA, showYAxisLables: true },
+    async container => {
+      await new Promise(resolve => setTimeout(resolve));
+      // Assert
+      expect(screen.queryByText('String One')).not.toBeNull();
+      expect(screen.queryByText('String Two')).not.toBeNull();
+    },
+  );
+
+  testWithWait(
+    'Should reduce the opacity of the other bars on mouse over a bar legend',
+    HorizontalBarChartWithAxis,
+    { data: chartPointsHBCWA },
+    async container => {
+      const legends = screen.getAllByText((content, element) => element!.tagName.toLowerCase() === 'button');
+      fireEvent.mouseOver(legends[0]);
+      await new Promise(resolve => setTimeout(resolve));
+      const bars = screen.getAllByText((content, element) => element!.tagName.toLowerCase() === 'rect');
+      // Assert
+      expect(bars).toHaveLength(4);
+      expect(bars[0]).toHaveStyle('opacity: 0.1');
+      expect(bars[1]).toHaveStyle('opacity: 0.1');
+      expect(bars[2]).toHaveStyle('opacity: 0.1');
+      expect(bars[3]).not.toHaveAttribute('opacity');
+    },
+  );
+
+  testWithWait(
+    'Should reset the opacity of the bars on mouse leave a bar legend',
+    HorizontalBarChartWithAxis,
+    { data: chartPointsHBCWA },
+    async container => {
+      // Arrange
+      const legends = screen.getAllByText((content, element) => element!.tagName.toLowerCase() === 'button');
+      fireEvent.mouseOver(legends![0]);
+      await new Promise(resolve => setTimeout(resolve));
+      fireEvent.mouseLeave(legends![0]);
+      await new Promise(resolve => setTimeout(resolve));
+      const bars = screen.getAllByText((content, element) => element!.tagName.toLowerCase() === 'rect');
+      // Assert
+      expect(bars[0]).not.toHaveAttribute('opacity');
+      expect(bars[1]).not.toHaveAttribute('opacity');
+      expect(bars[2]).not.toHaveAttribute('opacity');
+      expect(bars[3]).not.toHaveAttribute('opacity');
+    },
+  );
 
   testWithWait(
     'Should show the callout with axis tooltip data',
@@ -291,18 +335,6 @@ describe('Horizontal bar chart with axis - Subcomponent callout', () => {
       expect(yAxisCallOutData[0].textContent).toEqual('1,000');
     },
   );
-});
-
-describe('Horizontal bar chart with axis - Subcomponent Labels', () => {
-  testWithWait(
-    'Should render the bars with labels hidden',
-    HorizontalBarChartWithAxis,
-    { data: chartPointsHBCWA, hideLabels: true },
-    container => {
-      // Assert
-      expect(getByClass(container, /barLabel/i)).toHaveLength(0);
-    },
-  );
 
   testWithWait(
     'Should show y axis label tooltip when showYAxisLablesTooltip is true',
@@ -317,22 +349,9 @@ describe('Horizontal bar chart with axis - Subcomponent Labels', () => {
   );
 });
 
-describe.skip('Skip - Horizontal bar chart with axis - Subcomponent Labels', () => {
-  testWithWait(
-    'Should expand y axis label when showYAxisLables is true',
-    HorizontalBarChartWithAxis,
-    { data: chartPointsWithStringYAxisHBCWA, showYAxisLables: true },
-    async container => {
-      await new Promise(resolve => setTimeout(resolve));
-      // Assert
-      expect(screen.queryByText('String One')).not.toBeNull();
-      expect(screen.queryByText('String Two')).not.toBeNull();
-    },
-  );
-});
-
 describe('Horizontal bar chart with axis - Screen resolution', () => {
   beforeEach(() => {
+    sharedBeforeEach();
     jest.spyOn(global.Math, 'random').mockReturnValue(0.1);
   });
 
@@ -379,6 +398,8 @@ describe('Horizontal bar chart with axis - Screen resolution', () => {
 });
 
 describe('Horizontal bar chart with axis - Theme', () => {
+  beforeEach(sharedBeforeEach);
+
   test('Should reflect theme change', () => {
     // Arrange
     const { container } = render(
@@ -392,6 +413,8 @@ describe('Horizontal bar chart with axis - Theme', () => {
 });
 
 describe('HorizontalBarChartWithAxis - mouse events', () => {
+  beforeEach(sharedBeforeEach);
+
   testWithWait(
     'Should render callout correctly on mouseover',
     HorizontalBarChartWithAxis,
@@ -405,6 +428,8 @@ describe('HorizontalBarChartWithAxis - mouse events', () => {
 });
 
 describe('Horizontal Bar Chart With Axis - axe-core', () => {
+  beforeEach(sharedBeforeEach);
+
   test('Should pass accessibility tests', async () => {
     const { container } = render(<HorizontalBarChartWithAxis data={pointsHBCWA} />);
     let axeResults;

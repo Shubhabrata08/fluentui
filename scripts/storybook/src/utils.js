@@ -36,9 +36,9 @@ function loadWorkspaceAddon(addonName, options) {
 
   const inMemoryTsTranspilationTemplate = stripIndents`
       function registerInMemoryTsTranspilation(){
-        const { registerTsProject } = require('nx/src/utils/register');
+        const { registerTsProject } = require('@nx/js/src/internal');
         const { joinPathFragments } = require('@nx/devkit');
-        registerTsProject(joinPathFragments(__dirname, '..'), 'tsconfig.lib.json');
+        registerTsProject(joinPathFragments(__dirname, '..', 'tsconfig.lib.json'));
       }
 
       registerInMemoryTsTranspilation();
@@ -196,7 +196,6 @@ function getImportMappingsForExportToSandboxAddon(allPackageInfo = getAllPackage
   function isPackagePartOfReactComponentsSuite(projectName) {
     const suiteProject = allPackageInfo['@fluentui/react-components'];
 
-    // this is needed because react-northstar is a lerna sub-project thus `getAllPackageInfo` returns only projects within `packages/fluentui/` folder
     if (suiteProject) {
       const suiteDependencies = suiteProject.packageJson.dependencies ?? {};
       return Boolean(suiteDependencies[projectName]);
